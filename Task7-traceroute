@@ -1,0 +1,7 @@
+#!/bin/bash
+
+# Prompt the user for the IP address or hostname
+read -p "Enter the IP address or hostname: " ip_address_or_hostname
+
+# Perform traceroute
+traceroute $ip_address_or_hostname
