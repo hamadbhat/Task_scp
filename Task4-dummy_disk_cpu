@@ -1,0 +1,22 @@
+#!/bin/bash
+URL=https://www.seas.upenn.edu/~cis5190/fall2020/assets/lectures/lecture-8/Lecture8-nn-1.pptx
+download_file() {
+        wget -q -O /dev/null $URL  &
+        echo "Downloading file in background"
+}
+
+get_disk_usage() {
+        df -h /
+}
+
+get_cpu_percentage() {
+        top -bn1 | grep "Cpu(s)"
+}
+
+download_file
+
+echo "Disk Usage:"
+get_disk_usage
+
+echo "CPU Percentage:"
+get_cpu_percentage
