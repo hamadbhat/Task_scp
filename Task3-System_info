@@ -1,0 +1,11 @@
+#!/bin/bash
+# Print system information
+echo "-------System Information:"
+echo "Architecture of operating system:"
+uname -m
+echo "Operating system:"
+uname -o
+echo "Name of system"
+uname -n
+echo "ALL Info"
+uname -a
