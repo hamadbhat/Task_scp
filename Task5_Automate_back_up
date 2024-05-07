@@ -1,0 +1,43 @@
+#!/bin/bash
+
+# Set the paths to the source and backup directories
+SRC_DIR="/home/user1"
+BACKUP_DIR="/home/user1/backup"
+
+# Set the name of the Python file to be backed up
+FILE_NAME="abc.py"
+
+# Set the timestamp format
+TIMESTAMP=$(date +"%Y_%m_%d_%H_%M_%S")
+
+# Set the backup file name with the timestamp
+BACKUP_FILE="${BACKUP_DIR}/${FILE_NAME}_${TIMESTAMP}"
+
+# Check if the source file exists
+if [ ! -f "${SRC_DIR}/${FILE_NAME}" ]; then
+            echo "Error: Source file not found"
+                exit 1
+fi
+
+# Copy the source file to the backup directory with the timestamp
+cp "${SRC_DIR}/${FILE_NAME}" "${BACKUP_FILE}"
+
+# Check if the copy was successful
+if [ $? -eq 0 ]; then
+            echo "Backup successful: ${BACKUP_FILE}"
+    else
+                echo "Error: Backup failed"
+                    exit 1
+fi
+
+# Install inotify-tools if not already installed
+if [ ! -x "$(command -v inotifywait)" ]; then
+            echo "Installing inotify-tools"
+                sudo apt-get install -y inotify-tools
+fi
+
+# Monitor the source file for changes and update the backup file
+inotifywait -m -e modify,move,create,delete "${SRC_DIR}/${FILE_NAME}" |
+        while read path _; do
+    # Update the backup file with the modified source file
+                cp "${SRC_DIR}/${FILE_NAME}" "${BACKUP_FILE}"
