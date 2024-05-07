@@ -1,0 +1,10 @@
+#!/bin/bash
+
+# Prompt the user for a directory and search string
+echo "Enter the directory to search:"
+read dir
+echo "Enter the search string:"
+read search_string
+
+# Use find and grep to search for the specified string in text files
+find "$dir" -type f \( -iname "*.txt" -o -iname "*.text" \) -exec grep -Hn --color=auto "$search_string" {} \;
