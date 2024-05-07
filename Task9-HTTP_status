@@ -1,0 +1,11 @@
+#!/bin/bash
+
+echo "Enter a website URL:"
+read url
+
+if ! curl --silent --head --write-out '%{http_code}\n' --output /dev/null "$url"; then
+        echo "Failed to connect to the website."
+else
+        status_code=$(curl --silent --head --write-out '%{http_code}\n' --output /dev/null "$url")
+        echo "The HTTP status code of the website is: $status_code"
+fi
