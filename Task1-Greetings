@@ -1,0 +1,14 @@
+#!/bin/bash
+hour=$(date +%H)
+if (( $hour >= 6 )) && (( $hour < 12 ))
+then
+        echo "GOOD MORNING!"
+elif (( $hour >= 12 )) && (( $hour < 18 ))
+then
+        echo "GOOD AFTERNOON!"
+elif (( $hour >= 18 )) && (( $hour < 24 ))
+then
+        echo "GOOD EVENING!"
+else
+        echo "GOOD NIGHT!"
+fi
