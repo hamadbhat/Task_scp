@@ -1,0 +1,31 @@
+#!/bin/bash
+#function to check if an IP address is live
+check_ip() {
+        ip=$1
+        ping -c 1 $ip > /dev/null 2>&1
+        if [ $? -eq 0 ]; then
+        echo "$ip is live"
+        fi
+}
+
+# Get the start and end IP addresses from the user
+echo "Enter the start IP address (e.g. 192.168.1.1):"
+read start_ip
+echo "Enter the end IP address (e.g. 192.168.1.255):"
+read end_ip
+
+# Parse the start and end IP addresses into variables
+start_octets=(${start_ip//./ })
+end_octets=(${end_ip//./ })
+
+# Loop through the range of IP addresses and check if they are live
+for ((i = start_octets[3]; i <= end_octets[3]; i++)); do
+        for ((j = start_octets[2]; j <= end_octets[2]; j++)); do
+                for ((k = start_octets[1]; k <= end_octets[1]; k++)); do
+                        for ((l = start_octets[0]; l <= end_octets[0]; l++)); do
+                                ip="$l.$k.$j.$i"
+                                check_ip $ip
+                        done
+                done
+        done
+done
